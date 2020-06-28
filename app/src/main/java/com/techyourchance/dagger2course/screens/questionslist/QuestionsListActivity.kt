@@ -16,40 +16,27 @@ import com.techyourchance.dagger2course.networking.StackoverflowApi
 import com.techyourchance.dagger2course.questions.Question
 import com.techyourchance.dagger2course.screens.common.dialogs.ServerErrorDialogFragment
 import com.techyourchance.dagger2course.screens.questiondetails.QuestionDetailsActivity
-import com.techyourchance.dagger2course.screens.questionslist.QuestionsListActivity.QuestionsAdapter.QuestionViewHolder
 import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
-class QuestionsListActivity : AppCompatActivity() {
+class QuestionsListActivity : AppCompatActivity(), QuestionsListViewMvc.Listener {
 
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    private lateinit var swipeRefresh: SwipeRefreshLayout
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var questionsAdapter: QuestionsAdapter
     private lateinit var stackoverflowApi: StackoverflowApi
 
     private var isDataLoaded = false
 
+    private lateinit var viewMvc: QuestionsListViewMvc
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.layout_questions_list)
 
-        // init pull-down-to-refresh
-        swipeRefresh = findViewById(R.id.swipeRefresh)
-        swipeRefresh.setOnRefreshListener {
-            fetchQuestions()
-        }
+        viewMvc = QuestionsListViewMvc(LayoutInflater.from(this), null)
 
-        // init recycler view
-        recyclerView = findViewById(R.id.recycler)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        questionsAdapter = QuestionsAdapter{ clickedQuestion ->
-            QuestionDetailsActivity.start(this, clickedQuestion.id)
-        }
-        recyclerView.adapter = questionsAdapter
+        setContentView(viewMvc.rootView)
 
         // init retrofit
         val retrofit = Retrofit.Builder()
@@ -61,6 +48,7 @@ class QuestionsListActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        viewMvc.registerListener(this)
         if (!isDataLoaded) {
             fetchQuestions()
         }
@@ -69,15 +57,20 @@ class QuestionsListActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         coroutineScope.coroutineContext.cancelChildren()
+        viewMvc.unregisterListener(this)
+    }
+
+    override fun onRefreshClicked() {
+        fetchQuestions()
     }
 
     private fun fetchQuestions() {
         coroutineScope.launch {
-            showProgressIndication()
+            viewMvc.showProgressIndication()
             try {
                 val response = stackoverflowApi.lastActiveQuestions(20)
                 if (response.isSuccessful && response.body() != null) {
-                    questionsAdapter.bindData(response.body()!!.questions)
+                    viewMvc.bindQuestions(response.body()!!.questions)
                     isDataLoaded = true
                 } else {
                     onFetchFailed()
@@ -87,7 +80,7 @@ class QuestionsListActivity : AppCompatActivity() {
                     onFetchFailed()
                 }
             } finally {
-                hideProgressIndication()
+                viewMvc.hideProgressIndication()
             }
         }
     }
@@ -98,47 +91,9 @@ class QuestionsListActivity : AppCompatActivity() {
                 .commitAllowingStateLoss()
     }
 
-    private fun showProgressIndication() {
-        swipeRefresh.isRefreshing = true
+    override fun onQuestionClicked(clickedQuestion: Question) {
+        QuestionDetailsActivity.start(this, clickedQuestion.id)
     }
 
-    private fun hideProgressIndication() {
-        if (swipeRefresh.isRefreshing) {
-            swipeRefresh.isRefreshing = false
-        }
-    }
 
-    class QuestionsAdapter(
-            private val onQuestionClickListener: (Question) -> Unit
-    ) : RecyclerView.Adapter<QuestionViewHolder>() {
-
-        private var questionsList: List<Question> = ArrayList(0)
-
-        inner class QuestionViewHolder(view: View) : ViewHolder(view) {
-            val title: TextView = view.findViewById(R.id.txt_title)
-        }
-
-        fun bindData(questions: List<Question>) {
-            questionsList = ArrayList(questions)
-            notifyDataSetChanged()
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionViewHolder {
-            val itemView = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.layout_question_list_item, parent, false)
-            return QuestionViewHolder(itemView)
-        }
-
-        override fun onBindViewHolder(holder: QuestionViewHolder, position: Int) {
-            holder.title.text = questionsList[position].title
-            holder.itemView.setOnClickListener {
-                onQuestionClickListener.invoke(questionsList[position])
-            }
-        }
-
-        override fun getItemCount(): Int {
-            return questionsList.size
-        }
-
-    }
 }
