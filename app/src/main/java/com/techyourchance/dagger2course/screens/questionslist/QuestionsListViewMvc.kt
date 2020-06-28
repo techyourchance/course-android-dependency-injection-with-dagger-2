@@ -11,10 +11,15 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.techyourchance.dagger2course.R
 import com.techyourchance.dagger2course.questions.Question
+import com.techyourchance.dagger2course.screens.common.viewsmvc.BaseViewMvc
 
 class QuestionsListViewMvc(
         private val layoutInflater: LayoutInflater,
         private val parent: ViewGroup?
+): BaseViewMvc<QuestionsListViewMvc.Listener>(
+        layoutInflater,
+        parent,
+        R.layout.layout_questions_list
 ) {
 
     interface Listener {
@@ -26,14 +31,7 @@ class QuestionsListViewMvc(
     private val recyclerView: RecyclerView
     private val questionsAdapter: QuestionsAdapter
 
-    val rootView: View = layoutInflater.inflate(R.layout.layout_questions_list, parent, false)
-
-    private val context: Context get() = rootView.context
-
-    private val listeners = HashSet<Listener>()
-
     init {
-
         // init pull-down-to-refresh
         swipeRefresh = findViewById(R.id.swipeRefresh)
         swipeRefresh.setOnRefreshListener {
@@ -51,7 +49,6 @@ class QuestionsListViewMvc(
             }
         }
         recyclerView.adapter = questionsAdapter
-
     }
 
     fun bindQuestions(questions: List<Question>) {
@@ -66,18 +63,6 @@ class QuestionsListViewMvc(
         if (swipeRefresh.isRefreshing) {
             swipeRefresh.isRefreshing = false
         }
-    }
-
-    fun <T : View?> findViewById(@IdRes id: Int): T {
-        return rootView.findViewById<T>(id)
-    }
-
-    fun registerListener(listener: Listener) {
-        listeners.add(listener)
-    }
-
-    fun unregisterListener(listener: Listener) {
-        listeners.remove(listener)
     }
 
     class QuestionsAdapter(
