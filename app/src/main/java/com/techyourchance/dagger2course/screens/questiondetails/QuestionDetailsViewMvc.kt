@@ -1,6 +1,5 @@
 package com.techyourchance.dagger2course.screens.questiondetails
 
-import android.content.Context
 import android.os.Build
 import android.text.Html
 import android.view.LayoutInflater
