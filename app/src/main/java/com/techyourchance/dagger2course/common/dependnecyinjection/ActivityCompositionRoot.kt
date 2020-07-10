@@ -1,4 +1,4 @@
-package com.techyourchance.dagger2course.common.composition
+package com.techyourchance.dagger2course.common.dependnecyinjection
 
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
