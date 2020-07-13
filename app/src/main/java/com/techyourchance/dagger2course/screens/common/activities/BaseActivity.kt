@@ -6,15 +6,17 @@ import com.techyourchance.dagger2course.common.dependnecyinjection.*
 
 open class BaseActivity: AppCompatActivity() {
 
-    private val appCompositionRoot get() = (application as MyApplication).appCompositionRoot
+    private val appCompositionRoot get() = (application as MyApplication).appComponent
 
-    val activityCompositionRoot by lazy {
-        ActivityCompositionRoot(this, appCompositionRoot)
+    val activityComponent by lazy {
+        DaggerActivityComponent.builder()
+                .activityModule(ActivityModule(this, appCompositionRoot))
+                .build()
     }
 
     private val presentationComponent by lazy {
         DaggerPresentationComponent.builder()
-                .presentationModule(PresentationModule(activityCompositionRoot))
+                .presentationModule(PresentationModule(activityComponent))
                 .build()
     }
 
