@@ -1,7 +1,8 @@
-package com.techyourchance.dagger2course.common.dependnecyinjection
+package com.techyourchance.dagger2course.common.dependnecyinjection.presentation
 
 import android.view.LayoutInflater
 import androidx.fragment.app.FragmentManager
+import com.techyourchance.dagger2course.common.dependnecyinjection.activity.ActivityComponent
 import com.techyourchance.dagger2course.networking.StackoverflowApi
 import com.techyourchance.dagger2course.questions.FetchQuestionDetailsUseCase
 import com.techyourchance.dagger2course.questions.FetchQuestionsUseCase
