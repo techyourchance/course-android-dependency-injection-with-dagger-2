@@ -1,5 +1,6 @@
 package com.techyourchance.dagger2course.common.dependnecyinjection
 
+import com.techyourchance.dagger2course.common.dependnecyinjection.presentation.PresentationComponent
 import com.techyourchance.dagger2course.questions.FetchQuestionDetailsUseCase
 import com.techyourchance.dagger2course.questions.FetchQuestionsUseCase
 import com.techyourchance.dagger2course.screens.common.ScreensNavigator
