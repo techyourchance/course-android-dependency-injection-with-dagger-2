@@ -7,6 +7,7 @@ import com.techyourchance.dagger2course.networking.StackoverflowApi
 import com.techyourchance.dagger2course.screens.common.ScreensNavigator
 import dagger.Component
 
+@ActivityScope
 @Component(modules = [ActivityModule::class])
 interface ActivityComponent {
 
