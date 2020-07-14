@@ -24,5 +24,5 @@ open class BaseActivity: AppCompatActivity() {
                 .build()
     }
 
-    protected val injector get() = Injector(presentationComponent)
+    protected val injector get() = presentationComponent
 }
