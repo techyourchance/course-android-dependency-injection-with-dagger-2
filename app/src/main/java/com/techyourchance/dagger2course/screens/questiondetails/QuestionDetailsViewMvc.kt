@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.techyourchance.dagger2course.R
+import com.techyourchance.dagger2course.questions.QuestionWithBody
 import com.techyourchance.dagger2course.screens.common.toolbar.MyToolbar
 import com.techyourchance.dagger2course.screens.common.viewsmvc.BaseViewMvc
 
@@ -43,12 +44,12 @@ class QuestionDetailsViewMvc(
         swipeRefresh.isEnabled = false
     }
 
-    fun bindQuestionBody(questionBody: String) {
+    fun bindQuestionWithBody(question: QuestionWithBody) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            txtQuestionBody.text = Html.fromHtml(questionBody, Html.FROM_HTML_MODE_LEGACY)
+            txtQuestionBody.text = Html.fromHtml(question.body, Html.FROM_HTML_MODE_LEGACY)
         } else {
             @Suppress("DEPRECATION")
-            txtQuestionBody.text = Html.fromHtml(questionBody)
+            txtQuestionBody.text = Html.fromHtml(question.body)
         }
     }
 
