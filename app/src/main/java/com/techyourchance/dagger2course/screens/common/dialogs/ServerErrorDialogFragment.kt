@@ -3,7 +3,6 @@ package com.techyourchance.dagger2course.screens.common.dialogs
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import androidx.fragment.app.DialogFragment
 import com.techyourchance.dagger2course.R
 
 class ServerErrorDialogFragment : BaseDialog() {
