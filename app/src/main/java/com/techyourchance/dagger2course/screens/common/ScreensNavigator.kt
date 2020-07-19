@@ -1,15 +1,8 @@
 package com.techyourchance.dagger2course.screens.common
 
-import androidx.appcompat.app.AppCompatActivity
-import com.techyourchance.dagger2course.screens.questiondetails.QuestionDetailsActivity
+interface ScreensNavigator {
 
-class ScreensNavigator (private val activity: AppCompatActivity) {
+    fun navigateBack()
 
-    fun navigateBack() {
-        activity.onBackPressed()
-    }
-
-    fun toQuestionDetails(questionId: String) {
-        QuestionDetailsActivity.start(activity, questionId)
-    }
+    fun toQuestionDetails(questionId: String)
 }
