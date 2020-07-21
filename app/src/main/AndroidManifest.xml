@@ -21,6 +21,8 @@
 
         <activity android:name="com.techyourchance.dagger2course.screens.questiondetails.QuestionDetailsActivity"/>
 
+        <activity android:name="com.techyourchance.dagger2course.screens.viewmodel.ViewModelActivity"/>
+
     </application>
 
 </manifest>
