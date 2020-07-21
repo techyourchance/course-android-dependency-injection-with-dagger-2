@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.techyourchance.dagger2course.screens.common.toolbar.MyToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:text="Empty screen for ViewModel injection tutorial"/>
+
+</RelativeLayout>

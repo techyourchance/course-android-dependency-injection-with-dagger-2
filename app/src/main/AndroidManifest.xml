@@ -25,6 +25,8 @@
             android:name="com.techyourchance.dagger2course.screens.questiondetails.QuestionDetailsActivity"
             android:exported="true"/>
 
+        <activity android:name="com.techyourchance.dagger2course.screens.viewmodel.ViewModelActivity"/>
+
     </application>
 
 </manifest>
