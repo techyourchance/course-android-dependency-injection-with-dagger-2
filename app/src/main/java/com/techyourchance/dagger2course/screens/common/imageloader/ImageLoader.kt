@@ -4,10 +4,10 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.techyourchance.dagger2course.common.dependnecyinjection.activity.ActivityScope
+import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
-@ActivityScope
+@ActivityScoped
 class ImageLoader @Inject constructor(private val activity: AppCompatActivity) {
 
     private val requestOptions = RequestOptions().centerCrop()
