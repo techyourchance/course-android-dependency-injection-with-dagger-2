@@ -6,18 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.techyourchance.dagger2course.R
 import com.techyourchance.dagger2course.questions.Question
+import com.techyourchance.dagger2course.screens.viewsmvc.BaseViewMvc
 import java.util.ArrayList
 
 
 // it contains all the user interface logic,
 class QuestionsListViewMvc(
     layoutInflater: LayoutInflater,
-    parent: ViewGroup?
+    parent: ViewGroup?,
+    layoutId: Int
+) : BaseViewMvc<QuestionsListViewMvc.Listener>(
+    layoutInflater,
+    parent,
+    layoutId
 ) {
 
 
@@ -30,21 +37,16 @@ class QuestionsListViewMvc(
     private var recyclerView: RecyclerView
     private val questionsAdapter: QuestionsAdapter
 
-    val rootView: View =
-        layoutInflater.inflate(
-            R.layout.layout_questions_list,
-            parent,
-            false
-        )
-    private val context: Context get() = rootView.context
+
 
 
     //yaha pe multiple views isliye bana diye hai taaki ek common controller ho ske
     // multiple views ke liye so that so that if we want to notify multiple views we can do that.
-    val listeners = HashSet<Listener>()
+//    override val listeners = HashSet<Listener>()
 
 
     init {
+
 
         // init pull-down-to-refresh
         swipeRefresh = findViewById(R.id.swipeRefresh)
@@ -63,18 +65,6 @@ class QuestionsListViewMvc(
             }
         }
         recyclerView.adapter = questionsAdapter
-    }
-
-    private fun <T : View?> findViewById(@IdRes id: Int): T {
-        return rootView.findViewById<T>(id)
-    }
-
-    fun registerListener(listener: Listener) {
-        listeners.add(listener)
-    }
-
-    fun unregisterListener(listener: Listener) {
-        listeners.remove(listener)
     }
 
     fun showProgressIndication() {

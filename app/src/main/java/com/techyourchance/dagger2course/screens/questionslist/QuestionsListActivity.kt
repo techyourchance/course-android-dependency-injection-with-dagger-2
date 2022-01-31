@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import com.techyourchance.dagger2course.Constants
+import com.techyourchance.dagger2course.R
 import com.techyourchance.dagger2course.networking.StackoverflowApi
 import com.techyourchance.dagger2course.questions.Question
 import com.techyourchance.dagger2course.screens.common.dialogs.ServerErrorDialogFragment
@@ -28,9 +29,12 @@ class QuestionsListActivity : AppCompatActivity(), QuestionsListViewMvc.Listener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(viewMvc.rootView)
+        viewMvc = QuestionsListViewMvc(
+            LayoutInflater.from(this), null,
+            R.layout.layout_questions_list
+        )
 
-        viewMvc = QuestionsListViewMvc(LayoutInflater.from(this), null)
+        setContentView(viewMvc.rootView)
 
         // init retrofit
         val retrofit = Retrofit.Builder()
