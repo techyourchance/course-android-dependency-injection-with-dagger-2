@@ -1,33 +1,28 @@
 package com.techyourchance.dagger2course.questions
 
-import com.techyourchance.dagger2course.Constants
+import com.techyourchance.dagger2course.networking.SingleQuestionResponseSchema
 import com.techyourchance.dagger2course.networking.StackoverflowApi
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-
-//can be called FetchQuestionsInteractor
-class FetchQuestionsUseCase:BaseUseCase() {
-
-
+class FetchQuestionsDetailsUseCase : BaseUseCase() {
 
     private var stackoverflowApi: StackoverflowApi = retrofit.create(StackoverflowApi::class.java)
 
 
     sealed class Result {
-        class Success(val questions: List<Question>) : Result()
+        class Success(val questionResponse: SingleQuestionResponseSchema) : Result()
         object Failure : Result()
     }
 
-    suspend fun fetchLatestQuestions(): Result {
+
+    suspend fun fetchQuestionDetails(questionId: String): Result {
         return withContext(Dispatchers.IO) {
             try {
-                val response = stackoverflowApi.lastActiveQuestions(20)
+                val response = stackoverflowApi.questionDetails(questionId)
                 if (response.isSuccessful && response.body() != null) {
-                    return@withContext Result.Success(response.body()!!.questions)
+                    return@withContext Result.Success(response.body()!!)
                 } else {
                     return@withContext Result.Failure
                 }
@@ -40,5 +35,6 @@ class FetchQuestionsUseCase:BaseUseCase() {
             }
         }
     }
+
 
 }
