@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.techyourchance.dagger2course.R
 import com.techyourchance.dagger2course.questions.FetchQuestionsUseCase
 import com.techyourchance.dagger2course.questions.Question
+import com.techyourchance.dagger2course.screens.common.ScreensNavigator
 import com.techyourchance.dagger2course.screens.common.dialogs.DialogsNavigator
 import com.techyourchance.dagger2course.screens.common.dialogs.ServerErrorDialogFragment
 import com.techyourchance.dagger2course.screens.questiondetails.QuestionDetailsActivity
@@ -26,6 +27,9 @@ class QuestionsListActivity : AppCompatActivity(), QuestionsListViewMvc.Listener
     private lateinit var fetchQuestionsUseCase: FetchQuestionsUseCase
 
     private lateinit var dialogsNavigator: DialogsNavigator
+
+
+    private lateinit var screensNavigator: ScreensNavigator
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewMvc = QuestionsListViewMvc(
@@ -35,6 +39,7 @@ class QuestionsListActivity : AppCompatActivity(), QuestionsListViewMvc.Listener
         setContentView(viewMvc.rootView)
         fetchQuestionsUseCase = FetchQuestionsUseCase()
         dialogsNavigator = DialogsNavigator(this.supportFragmentManager)
+        screensNavigator = ScreensNavigator(this)
 
     }
 
@@ -81,7 +86,7 @@ class QuestionsListActivity : AppCompatActivity(), QuestionsListViewMvc.Listener
     }
 
     override fun onQuestionClicked(clickedQuestion: Question) {
-        QuestionDetailsActivity.start(this, clickedQuestion.id)
+        screensNavigator.toQuestionsDetails(clickedQuestion.id)
     }
 
 
