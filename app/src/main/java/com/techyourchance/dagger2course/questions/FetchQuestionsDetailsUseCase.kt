@@ -5,8 +5,9 @@ import com.techyourchance.dagger2course.networking.StackoverflowApi
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.Retrofit
 
-class FetchQuestionsDetailsUseCase : BaseUseCase() {
+class FetchQuestionsDetailsUseCase(private val retrofit: Retrofit) {
 
     private var stackoverflowApi: StackoverflowApi = retrofit.create(StackoverflowApi::class.java)
 

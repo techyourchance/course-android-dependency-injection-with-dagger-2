@@ -3,6 +3,7 @@ package com.techyourchance.dagger2course.screens.questionslist
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
+import com.techyourchance.dagger2course.MyApplication
 import com.techyourchance.dagger2course.R
 import com.techyourchance.dagger2course.questions.FetchQuestionsUseCase
 import com.techyourchance.dagger2course.questions.Question
@@ -37,7 +38,7 @@ class QuestionsListActivity : AppCompatActivity(), QuestionsListViewMvc.Listener
             R.layout.layout_questions_list
         )
         setContentView(viewMvc.rootView)
-        fetchQuestionsUseCase = FetchQuestionsUseCase()
+        fetchQuestionsUseCase = FetchQuestionsUseCase((application as MyApplication).retrofit)
         dialogsNavigator = DialogsNavigator(this.supportFragmentManager)
         screensNavigator = ScreensNavigator(this)
 

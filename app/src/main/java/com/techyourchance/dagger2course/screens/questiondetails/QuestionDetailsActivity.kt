@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import com.techyourchance.dagger2course.Constants
+import com.techyourchance.dagger2course.MyApplication
 import com.techyourchance.dagger2course.R
 import com.techyourchance.dagger2course.networking.StackoverflowApi
 import com.techyourchance.dagger2course.questions.FetchQuestionsDetailsUseCase
@@ -44,7 +45,8 @@ class QuestionDetailsActivity : AppCompatActivity(), QuestionDetailsViewMvc.List
         // retrieve question ID passed from outside
         questionId = intent.extras!!.getString(EXTRA_QUESTION_ID)!!
 
-        fetchQuestionsDetailsUseCase = FetchQuestionsDetailsUseCase()
+        fetchQuestionsDetailsUseCase =
+            FetchQuestionsDetailsUseCase((application as MyApplication).retrofit)
         dialogsNavigator = DialogsNavigator(this.supportFragmentManager)
         screensNavigator = ScreensNavigator(this)
     }
