@@ -10,16 +10,12 @@ class MyApplication : Application() {
 
     //retrofit should be initialised here as it is only instantiated once
 
-    public val retrofit = Retrofit.Builder()
+    private val retrofit = Retrofit.Builder()
         .baseUrl(Constants.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    public val stackOverFlowApi: StackoverflowApi = retrofit.create(StackoverflowApi::class.java)
-
-
-    override fun onCreate() {
-        super.onCreate()
-    }
+    val stackOverFlowApi: StackoverflowApi = retrofit.create(StackoverflowApi::class.java)
+    
 
 }
