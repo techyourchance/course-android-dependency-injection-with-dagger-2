@@ -10,10 +10,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 //can be called FetchQuestionsInteractor
-class FetchQuestionsUseCase(private val retrofit: Retrofit) {
+class FetchQuestionsUseCase(private val stackoverflowApi: StackoverflowApi) {
 
-
-    private var stackoverflowApi: StackoverflowApi = retrofit.create(StackoverflowApi::class.java)
 
 
     sealed class Result {

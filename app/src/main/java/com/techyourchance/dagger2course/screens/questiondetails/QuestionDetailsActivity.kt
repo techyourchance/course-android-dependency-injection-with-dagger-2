@@ -46,7 +46,7 @@ class QuestionDetailsActivity : AppCompatActivity(), QuestionDetailsViewMvc.List
         questionId = intent.extras!!.getString(EXTRA_QUESTION_ID)!!
 
         fetchQuestionsDetailsUseCase =
-            FetchQuestionsDetailsUseCase((application as MyApplication).retrofit)
+            FetchQuestionsDetailsUseCase((application as MyApplication).stackOverFlowApi)
         dialogsNavigator = DialogsNavigator(this.supportFragmentManager)
         screensNavigator = ScreensNavigator(this)
     }

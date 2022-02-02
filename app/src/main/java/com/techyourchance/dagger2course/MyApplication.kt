@@ -1,10 +1,11 @@
 package com.techyourchance.dagger2course
 
 import android.app.Application
+import com.techyourchance.dagger2course.networking.StackoverflowApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MyApplication: Application() {
+class MyApplication : Application() {
 
 
     //retrofit should be initialised here as it is only instantiated once
@@ -13,6 +14,9 @@ class MyApplication: Application() {
         .baseUrl(Constants.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
+
+    public val stackOverFlowApi: StackoverflowApi = retrofit.create(StackoverflowApi::class.java)
+
 
     override fun onCreate() {
         super.onCreate()

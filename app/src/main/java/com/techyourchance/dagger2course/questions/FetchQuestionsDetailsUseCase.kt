@@ -7,9 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 
-class FetchQuestionsDetailsUseCase(private val retrofit: Retrofit) {
-
-    private var stackoverflowApi: StackoverflowApi = retrofit.create(StackoverflowApi::class.java)
+class FetchQuestionsDetailsUseCase(private val stackoverflowApi: StackoverflowApi) {
 
 
     sealed class Result {
